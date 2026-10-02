@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: ChatMemory
+
+  port: 8080
+  ai:
+    openai:
+      api-key: ${NVIDIA_API_KEY}
+      base-url: https://integrate.api.nvidia.com/v1
+      chat:
+        options:
+          model: nvidia/nemotron-3.5-lightning-30b-a3b
+          max-tokens: 300
+
+        extra-body:
+          chat_template_kwargs:
+            enable_thinking: false
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: ALWAYS
+# DataBase Configuration
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/chat_memory
+    username: root
+    password: Abhi@123
