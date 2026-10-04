@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: ChatMemory
+
+  ai:
+    openai:
+      api-key: ${NVIDIA_API_KEY}
+      base-url: https://integrate.api.nvidia.com/v1
+
+      chat:
+        options:
+          model: nvidia/nemotron-3.5-lightning-30b-a3b
+          max-tokens: 300
+        extra-body:
+          chat_template_kwargs:
+            enable_thinking: false
+
+      embedding:
+        api-key: ${NVIDIA_API_KEY}
+        base-url: https://integrate.api.nvidia.com/v1
+        model: nvidia/nemotron-3-embed-1b
+        extra-body:
+          input_type: query
+
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: ALWAYS
+
+    vectorstore:
+      mariadb:
+        initialize-schema: true
+        distance-type: COSINE
+        dimensions: 2048
+
+  datasource:
+    url: jdbc:mariadb://localhost:3308/springai
+    username: root
+    password: root1234
+    driver-class-name: org.mariadb.jdbc.Driver
+
+server:
+  port: 8080
